@@ -2,8 +2,8 @@ package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.javawebinar.topjava.dao.MealDao;
-import ru.javawebinar.topjava.dao.implMealDaoInMemory;
+import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.repository.MealRepositoryInMemory;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -18,10 +18,10 @@ import java.util.List;
 
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
-    private MealDao mealDao;
+    private final MealRepository mealRepository;
 
     public MealServlet() {
-        this.mealDao = new implMealDaoInMemory();
+        this.mealRepository = new MealRepositoryInMemory();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = Integer.parseInt(req.getParameter("id"));
                 log.info("Delete ID = {}", id);
-                mealDao.delete(id);
+                mealRepository.delete(id);
                 resp.sendRedirect("meals");
                 break;
             case "create":
@@ -39,7 +39,7 @@ public class MealServlet extends HttpServlet {
                 Meal meal;
                 if ("update".equals(action)) {
                     int idMeals = Integer.parseInt(req.getParameter("id"));
-                    meal = mealDao.get(idMeals);
+                    meal = mealRepository.get(idMeals);
                 } else {
                     meal = new Meal(LocalDateTime.now(), "", 1);
                 }
@@ -48,7 +48,7 @@ public class MealServlet extends HttpServlet {
                 break;
             default:
                 log.info("Get All Meals");
-                List<MealTo> list = MealsUtil.getAll(mealDao.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY);
+                List<MealTo> list = MealsUtil.getAll(mealRepository.getAll(), MealsUtil.DEFAULT_CALORIES_PER_DAY);
                 req.setAttribute("meals", list);
                 req.getRequestDispatcher("/meals.jsp").forward(req, resp);
                 break;
@@ -63,7 +63,7 @@ public class MealServlet extends HttpServlet {
         Meal meal = new Meal(id, LocalDateTime.parse(req.getParameter("dateTime")),
                 req.getParameter("description"), Integer.parseInt(req.getParameter("calories")));
         log.info(id == -1 ? "Create {}" : "Update {}", meal);
-        mealDao.add(meal);
+        mealRepository.add(meal);
         resp.sendRedirect("meals");
     }
 }
