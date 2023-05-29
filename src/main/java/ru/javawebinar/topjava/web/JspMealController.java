@@ -30,7 +30,7 @@ public class JspMealController extends AbstractMealController {
     @GetMapping("/delete")
     public String delete(HttpServletRequest request) {
         super.delete(getId(request));
-        return "redirect:meals";
+        return "redirect:/meals";
     }
 
     @GetMapping("/update")
@@ -67,7 +67,7 @@ public class JspMealController extends AbstractMealController {
         } else {
             super.create(meal);
         }
-        return "redirect:meals";
+        return "redirect:/meals";
     }
 
     private int getId(HttpServletRequest request) {
