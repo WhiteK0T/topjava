@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "7c5aa0f6-3f45-4535-a051-3e0b934690c8",
+		"name": "Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8454432"
+	},
+	"item": [
+		{
+			"name": "get All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topjava/rest/admin/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topjava",
+						"rest",
+						"admin",
+						"users"
+					]
+				},
+				"description": "Get All Users"
+			},
+			"response": []
+		},
+		{
+			"name": "get Users 100001",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/topjava/rest/admin/users/100001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"topjava",
+						"rest",
+						"admin",
+						"users",
+						"100001"
+					]
+				},
+				"description": "get Users 100001"
+			},
+			"response": []
+		}
+	]
+}
